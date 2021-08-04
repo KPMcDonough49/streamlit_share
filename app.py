@@ -35,7 +35,7 @@ def main():
                 st.write(predictions)
 
 def predict(image):
-    classifier_model = 'my_model.h5'
+    classifier_model = '/Users/kevinmcdonough/Documents/Flatiron/capstone/project/Capstone/my_model.h5'
     model = load_model(classifier_model)
     test_image = image.resize((300,300))
     img_array = np.array(test_image).astype('float32')/255
