@@ -14,7 +14,7 @@ fig = plt.figure()
 
 st.title('Infection Detection')
 
-st.markdown("Welcome to this simple web application that uses an image classifier to identify infection in wounds. This is meant to be used at a screening tool, and the model works best when the image is a close-up of the wound and surrounding skin.")
+st.markdown("Welcome to this simple web application that uses an image classifier to identify infection in wounds. This is meant to be used as a screening tool, and the model works best when the image is a close-up of the wound and surrounding skin.")
 
 def main():
     file_uploaded = st.file_uploader("Choose File", type=["jpg","jpeg", "png"])
