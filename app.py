@@ -4,7 +4,8 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 import numpy as np
 from tensorflow import keras
-from tensorflow.keras.models import load_model
+from tensorflow.keras.models import load_model, Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Dropout, Flatten, Dense, Activation, BatchNormalization
 from tensorflow.keras import preprocessing
 from tensorflow.keras.preprocessing.image import load_img
 import time
@@ -35,11 +36,30 @@ def main():
                 st.write(predictions)
 
 def predict(image):
-    classifier_model = '/Users/kevinmcdonough/Documents/Flatiron/capstone/project/Capstone/my_model.h5'
-    model = load_model(classifier_model)
-    test_image = image.resize((300,300))
+    model = Sequential()
+
+    model.add(Conv2D(32, (3, 3), activation='relu', input_shape=(150, 150, 3)))
+    model.add(BatchNormalization())
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(0.25))
+
+    model.add(Conv2D(64, (3, 3), activation='relu'))
+    model.add(BatchNormalization())
+    model.add(Dropout(0.25))
+
+    model.add(Flatten())
+    model.add(Dense(64, activation='relu'))
+    model.add(BatchNormalization())
+    model.add(Dropout(0.5))
+    model.add(Dense(2, activation='softmax'))
+
+    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+    model.load_weights('model_weights.h5')
+
+    test_image = image.resize((150,150))
     img_array = np.array(test_image).astype('float32')/255
-    img_array = img_array.reshape(300,300,3)
+    img_array = img_array.reshape(150,150,3)
     img_array = np.expand_dims(img_array, axis=0)
     class_names = [
           'Infection',
