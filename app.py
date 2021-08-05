@@ -17,7 +17,7 @@ st.title('Infection Detection')
 st.markdown("Welcome to this simple web application that uses an image classifier to identify infection in wounds")
 
 def main():
-    file_uploaded = st.file_uploader("Choose File", type=["jpg","jpeg"])
+    file_uploaded = st.file_uploader("Choose File", type=["jpg","jpeg", "png"])
     class_btn = st.button("Classify")
     if file_uploaded is not None:    
         image = Image.open(file_uploaded)
@@ -58,6 +58,7 @@ def predict(image):
     model.load_weights('model_weights.h5')
 
     test_image = image.resize((150,150))
+    test_image = test_image.convert('RGB')
     img_array = np.array(test_image).astype('float32')/255
     img_array = img_array.reshape(150,150,3)
     img_array = np.expand_dims(img_array, axis=0)
